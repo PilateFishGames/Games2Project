@@ -42,8 +42,7 @@ public class PlayerController : MonoBehaviour {
 			}
 		}
 		if (Input.GetKeyDown ("left alt")) {
-			if(isAuto) isAuto = false;
-			else isAuto = true;
+			isAuto = !isAuto;
 		}
 	}
 
