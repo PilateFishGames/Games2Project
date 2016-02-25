@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.SceneManagement;
+//using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour {
@@ -44,10 +44,12 @@ public class PauseMenu : MonoBehaviour {
 	}
 
 	public void controlsButton() {
-		SceneManager.LoadScene (controls);
+		Application.LoadLevel (controls);
+		//SceneManager.LoadScene (controls);
 	}
 
 	public void quit() {
-		SceneManager.LoadScene (mainMenu);
+		Application.LoadLevel (mainMenu);
+		//SceneManager.LoadScene (mainMenu);
 	}
 }

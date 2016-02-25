@@ -5,7 +5,7 @@ public class Enemy : MonoBehaviour {
 
 	private float health = 100.0f;
 
-	//private float damage = 10.0f;
+	private float damage = 10.0f;
 
 	public float speed = 5.0f;
 
@@ -28,9 +28,9 @@ public class Enemy : MonoBehaviour {
 		transform.Translate (direction * move);
 	}
 
-	//void OnCollisionEnter(Collision other) {
-	//	other.gameObject.GetComponent<Shooting> ().dealDamage(damage);
-	//}
+	void OnTriggerEnter(Collider other) {
+		other.gameObject.GetComponent<PlayerController> ().dealDamage(damage);
+	}
 
 	public void dealDamage(float damage) {
 		health -= damage;

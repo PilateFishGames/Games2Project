@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.SceneManagement;
+//using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour {
 
 	public string firstLevel;
+	public string currentCheckpoint;
 
 	// Use this for initialization
 	void Start () {
@@ -16,8 +17,13 @@ public class MainMenu : MonoBehaviour {
 	
 	}
 
+	public void continueGame() {
+
+	}
+
 	public void newGame() {
-		SceneManager.LoadScene (firstLevel);
+		Application.LoadLevel (firstLevel);
+		//SceneManager.LoadScene (firstLevel);
 	}
 
 	public void exitGame() {
