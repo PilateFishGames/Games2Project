@@ -29,7 +29,9 @@ public class Enemy : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		other.gameObject.GetComponent<PlayerController> ().dealDamage(damage);
+        if (other.tag == "Player") {
+            other.gameObject.GetComponent<PlayerController>().dealDamage(damage);
+        }
 	}
 
 	public void dealDamage(float damage) {

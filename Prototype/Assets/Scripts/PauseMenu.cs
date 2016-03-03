@@ -30,13 +30,17 @@ public class PauseMenu : MonoBehaviour {
 			pauseMenuCanvas.SetActive(true);
 			Time.timeScale = 0.0f;
 			target.SetActive(false);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
 
 		} 
 		else {
 			pauseMenuCanvas.SetActive(false);
 			Time.timeScale = 1.0f;
 			target.SetActive(true);
-		}
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
 	}
 
 	public void resume() {
