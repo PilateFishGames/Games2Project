@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-//using UnityEngine.SceneManagement;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour {
@@ -32,6 +32,7 @@ public class PauseMenu : MonoBehaviour {
 			target.SetActive(false);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+			GameController.followMouse = false;
 
 		} 
 		else {
@@ -40,6 +41,7 @@ public class PauseMenu : MonoBehaviour {
 			target.SetActive(true);
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+			GameController.followMouse = true;
         }
 	}
 
@@ -48,12 +50,12 @@ public class PauseMenu : MonoBehaviour {
 	}
 
 	public void controlsButton() {
-		Application.LoadLevel (controls);
-		//SceneManager.LoadScene (controls);
+		//Application.LoadLevel (controls);
+		SceneManager.LoadScene (controls);
 	}
 
 	public void quit() {
-		Application.LoadLevel (mainMenu);
-		//SceneManager.LoadScene (mainMenu);
+		//Application.LoadLevel (mainMenu);
+		SceneManager.LoadScene (mainMenu);
 	}
 }

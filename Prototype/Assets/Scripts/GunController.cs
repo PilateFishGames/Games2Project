@@ -21,6 +21,8 @@ public class GunController : MonoBehaviour {
 			Debug.LogError ("Camera is null");
 			this.enabled = true;
 		}
+
+		isAuto = true;
 	}
 	
 	// Update is called once per frame
@@ -43,7 +45,7 @@ public class GunController : MonoBehaviour {
 		RaycastHit hitInfo;
 		if (Physics.Raycast (cam.transform.position, cam.transform.forward, out hitInfo, range, lm)) {
 			Debug.Log (hitInfo.collider.name + " was hit");
-			hitInfo.collider.gameObject.GetComponent<Enemy>().dealDamage (damage);
+			hitInfo.collider.gameObject.GetComponent<EnemyController>().dealDamage (damage);
 		}
 	}
 }

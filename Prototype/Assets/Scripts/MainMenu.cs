@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-//using UnityEngine.SceneManagement;
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour {
 
@@ -22,8 +22,9 @@ public class MainMenu : MonoBehaviour {
 	}
 
 	public void newGame() {
-		Application.LoadLevel (firstLevel);
-		//SceneManager.LoadScene (firstLevel);
+		GameController.followMouse = true;
+		//Application.LoadLevel (firstLevel);
+		SceneManager.LoadScene (firstLevel);
 	}
 
 	public void exitGame() {
