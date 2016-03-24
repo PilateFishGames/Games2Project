@@ -12,8 +12,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public class MovementSettings
         {
             public float ForwardSpeed = 8.0f;   // Speed when walking forward
-            public float BackwardSpeed = 4.0f;  // Speed when walking backwards
-            public float StrafeSpeed = 4.0f;    // Speed when walking sideways
+            public float BackwardSpeed = 8.0f;  // Speed when walking backwards //was 4.0f
+            public float StrafeSpeed = 8.0f;    // Speed when walking sideways  //was 4.0f
             public float RunMultiplier = 2.0f;   // Speed when sprinting
 	        public KeyCode RunKey = KeyCode.LeftShift;
             public float JumpForce = 30f;
@@ -118,7 +118,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void Start()
         {
-            m_RigidBody = GetComponent<Rigidbody>();
+			m_RigidBody = GetComponent<Rigidbody> ();
             m_Capsule = GetComponent<CapsuleCollider>();
             mouseLook.Init (transform, cam.transform);
         }
