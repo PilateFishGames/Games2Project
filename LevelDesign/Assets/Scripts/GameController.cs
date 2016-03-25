@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityStandardAssets.Characters.FirstPerson;
+//using UnityStandardAssets.Characters.FirstPerson;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
-	private RigidbodyFirstPersonController player;
+	private PlayerController player;
 	public static bool followMouse;
-	//public int spawnPointNum;
 	public GameObject[] spawnPoints;
 	public bool firstSpawnType;
 	public GameObject enemy;
@@ -14,16 +14,16 @@ public class GameController : MonoBehaviour {
 	public float spawnDelay;
 	private float delayRemaining;
 	public int enemyNum;
-	//public Transform player;
+	public Text healthText;
 
 	// Use this for initialization
 	void Start () {
         //Cursor.lockState = CursorLockMode.Locked;
         //Cursor.visible = false;
-		//firstSpawnType = true;
-		player = FindObjectOfType<RigidbodyFirstPersonController> ();
+		player = FindObjectOfType<PlayerController>();
+		healthText.text = player.currentHealth.ToString ();
 		if (!firstSpawnType) {
-			StartCoroutine ("SpawnEnemies");
+			StartCoroutine (SpawnEnemies ());
 		}
 	}
 	
@@ -32,6 +32,8 @@ public class GameController : MonoBehaviour {
 		if (firstSpawnType) {
 			for (int i = 0; i < spawnPoints.Length; i++) {
 				if(spawnPoints[i] != null) {
+					if (player == null)
+						Debug.Log ("player is null");
 					Vector3 spawnPlayerDistance = spawnPoints [i].transform.position - player.transform.position;
 					if (spawnPlayerDistance.magnitude <= spawnDistance) {
 						Vector3 spawnCameraPoint = cam.WorldToViewportPoint (spawnPoints [i].transform.position);
@@ -43,7 +45,8 @@ public class GameController : MonoBehaviour {
 					}
 				}
 			}
-		} 
+		}
+		healthText.text = player.currentHealth.ToString ();
 	}
 
 	IEnumerator SpawnEnemies() {

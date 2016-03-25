@@ -57,7 +57,7 @@ public class GunController : MonoBehaviour {
 		RaycastHit hitInfo;
 		if (Physics.Raycast (cam.transform.position, cam.transform.forward, out hitInfo, range, lm)) {
 			//Debug.Log (hitInfo.collider.name + " was hit");
-			hitInfo.collider.gameObject.GetComponent<EnemyController>().dealDamage (damage);
+			hitInfo.collider.gameObject.GetComponent<EnemyController>().takeDamage (damage);
 		}
 		transform.localPosition -= Vector3.forward * 0.02f;
 		//recoilAngle += 5.0f;

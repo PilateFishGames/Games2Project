@@ -15,12 +15,14 @@ public class PlayerController : MonoBehaviour {
 	
 	CharacterController characterController;
 
-	public float health = 50;
+	public float startHealth = 50;
+	public float currentHealth;
 
 	// Use this for initialization
 	void Start () {
 		characterController = gameObject.GetComponent<CharacterController>();
 		GameController.followMouse = true;
+		currentHealth = startHealth;
 	}
 	
 	// Update is called once per frame
@@ -52,13 +54,13 @@ public class PlayerController : MonoBehaviour {
 		characterController.Move( speed * Time.deltaTime );
 	}
 
-	public void dealDamage(float damage) {
-		health -= damage;
-		if (health <= 0) {
+	public void takeDamage(float damage) {
+		currentHealth -= damage;
+		if (currentHealth <= 0) {
 			Debug.Log ("You are dead!");
 		} 
 		else {
-			Debug.Log("Health: " + health);
+			Debug.Log("Health: " + currentHealth);
 		}
 	}
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityStandardAssets.Characters.FirstPerson;
+//using UnityStandardAssets.Characters.FirstPerson;
 
 public class EnemyController : MonoBehaviour {
 
@@ -10,44 +10,101 @@ public class EnemyController : MonoBehaviour {
 
 	public float speed = 5.0f;
 
-	private RigidbodyFirstPersonController player;
+	public float timeBetweenAttacks = 1.0f;
+
+	private bool playerInRange;
+	private float attackTimer;
+
+	private PlayerController player;
 	private Vector3 playerPosition;
 
-	Animator anim;
+	private NavMeshAgent nav;
+
+	private Animator anim;
+
+	//public float sinkSpeed = 2.5f;
+	private bool isDead;
+	//private bool isSinking;
+
+	private CapsuleCollider cc;
 
 	// Use this for initialization
 	void Start () {
-		player = FindObjectOfType<RigidbodyFirstPersonController> ();
-		anim = gameObject.GetComponent<Animator> ();
+		player = FindObjectOfType<PlayerController> ();
+		anim = GetComponent<Animator> ();
+		nav = GetComponent<NavMeshAgent> ();
+		cc = GetComponent<CapsuleCollider> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		/*
 		playerPosition = player.transform.position;
 		Vector3 direction = playerPosition - transform.position;
 		OrientModel (direction);
 		anim.SetFloat ("Speed", speed);
-		if (!anim.GetCurrentAnimatorStateInfo (0).IsName ("Hurt")) {
-			transform.position = Vector3.MoveTowards (transform.position, playerPosition, speed * Time.deltaTime);
+		//transform.position = Vector3.MoveTowards (transform.position, playerPosition, speed * Time.deltaTime);
+		*/
+		if (health > 0 && player.currentHealth > 0) {
+			nav.SetDestination (player.transform.position);
+		} 
+		else {
+			nav.enabled = false;
 		}
+
+		attackTimer += Time.deltaTime;
+
+		if (attackTimer >= timeBetweenAttacks && playerInRange && health > 0) {
+			//anim.SetTrigger ("attack1");
+			Attack ();
+		}
+
+		if (player.currentHealth <= 0) {
+			anim.SetTrigger ("playerDead");
+		}
+		/*
+		if (isSinking) {
+			transform.Translate (-Vector3.up * sinkSpeed * Time.deltaTime);
+		}
+		*/
 	}
 
 	void OnTriggerEnter(Collider other) {
-        if (other.tag == "Player") {
-            other.gameObject.GetComponent<PlayerController>().dealDamage(damage);
+		if (other.tag == "Player") {
+			playerInRange = true;
         }
 	}
 
-	public void dealDamage(float damage) {
-		health -= damage;
-		Debug.Log ("Enemy health: " + health);
-		if (health <= 0) {
-			anim.SetTrigger ("isDead");
-			speed = 0.0f;
-		} 
-		else {
-			anim.SetTrigger ("wasHit");
+	void OnTriggerExit(Collider other) {
+		if (other.tag == "Player") {
+			playerInRange = false;
 		}
+	}
+
+	public void Attack() {
+		attackTimer = 0.0f;
+		if (player.currentHealth > 0.0f) {
+			player.takeDamage (damage);
+		}
+	}
+
+	public void takeDamage(float damage) {
+		if (isDead)
+			return;
+		health -= damage;
+		//Debug.Log ("Enemy health: " + health);
+		if (health <= 0) {
+			Die ();
+		} 
+	}
+
+	void Die() {
+		isDead = true;
+		cc.isTrigger = true;
+		anim.SetTrigger ("isDead");
+		nav.enabled = false;
+		GetComponent<Rigidbody> ().isKinematic = true;
+		Destroy (gameObject, 5.0f);
 	}
 
 	void OrientModel(Vector3 direction) {
