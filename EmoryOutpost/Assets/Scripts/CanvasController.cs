@@ -29,6 +29,8 @@ public class CanvasController : MonoBehaviour {
             text.text = strings[i];
             yield return new WaitForSeconds(textDelay);
         }
+
+        yield return new WaitForSeconds(2);
         SceneManager.LoadScene(level);
     }
 }

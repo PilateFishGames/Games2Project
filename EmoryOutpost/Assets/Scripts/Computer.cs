@@ -38,7 +38,7 @@ public class Computer : MonoBehaviour {
         if (GameController.timerInitiated)
         {
             timerAmount -= Time.deltaTime;
-
+            
             if(timerAmount > 0)
             {
                 string numString = timerAmount.ToString();
